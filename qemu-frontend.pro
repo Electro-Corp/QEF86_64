@@ -10,15 +10,18 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    newvm.cpp
 
 HEADERS += \
     common.h \
     mainwindow.h \
+    newvm.h \
     vmclass.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    newvm.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "newvm.h"
 #include <iostream>
 #include <QApplication>
 #include <fstream>
@@ -23,8 +24,9 @@ MainWindow::~MainWindow()
 //void MainWindow::startVm(std::string name,std::string CDROM,std::string HARDDRIVE,std::string ram){
 
 //}
-void MainWindow::refreshItems(){
 
+void MainWindow::refreshItems(){
+    ui->listWidget->clear();
     for(std::list<vm>::iterator i = viewVMS.begin(); i != viewVMS.end(); ++i)
     {
         ui->vm_name->setText((QString::fromStdString(i->name)));
@@ -35,13 +37,15 @@ void MainWindow::refreshItems(){
     }
 
 }
-void updateVMS(vm newVM){
-    std::ifstream pathForNewVM;
-    pathForNewVM.open("/home/segfault/qemuBackVMS/vms.qemuvm");
-    std::string newEntry;
-    newEntry = "{"+newVM.name+","+newVM.hdpath+","+newVM.cdpath+","+std::to_string(newVM.memsize)+"}";
-
-}
+/*
+ * Added into newvm.cpp instead.
+ */
+//void updateVMS(vm newVM){
+//    std::ifstream pathForNewVM;
+//    pathForNewVM.open("/home/segfault/qemuBackVMS/vms.qemuvm");
+//    std::string newEntry;
+//    newEntry = "{"+newVM.name+","+newVM.hdpath+","+newVM.cdpath+","+std::to_string(newVM.memsize)+"}";
+//}
 std::list<vm> MainWindow::parsevms(std::string vmsfile){
     std::ifstream pathForVM;
     pathForVM.open(vmsfile);
@@ -112,7 +116,7 @@ void MainWindow::on_commandLinkButton_clicked()
     if(hdpath != "NULL"){
         final = final + " -hdd "+hdpath;
     }
-    final = final + " -m 2G";
+    final = final + " -m "+(std::to_string(i->memsize))+"G";
     char mainfinal[100000];
     strcpy(mainfinal,final.c_str());
     std::system(mainfinal);
@@ -137,5 +141,18 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
     ui->vm_name->setText((QString::fromStdString(i->name)));
     ui->label->setText((QString::fromStdString(i->cdpath)));
     ui->label_2->setText((QString::fromStdString(i->hdpath)));
+}
+
+
+void MainWindow::on_create_new_vm_clicked()
+{
+    newvm *addvm = new newvm();
+    addvm->show();
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    this->refreshItems();
 }
 

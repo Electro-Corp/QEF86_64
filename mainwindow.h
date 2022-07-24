@@ -10,7 +10,6 @@
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -31,6 +30,10 @@ private slots:
    // void on_listWidget_itemSelectionChanged();
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
+
+    void on_create_new_vm_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
