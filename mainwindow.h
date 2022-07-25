@@ -25,15 +25,15 @@ public:
 private slots:
     void on_commandLinkButton_clicked();
 
-    //void on_listWidget_itemClicked(QListWidgetItem *item);
-
-   // void on_listWidget_itemSelectionChanged();
-
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
     void on_create_new_vm_clicked();
 
     void on_pushButton_clicked();
+
+    void newimg_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -14,7 +14,7 @@
    <string>QEF86_64</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="applications-science">
+   <iconset theme="applications-utilities">
     <normaloff>.</normaloff>.</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -156,6 +156,19 @@
     </property>
     <property name="text">
      <string>Update VM List</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>290</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create HD</string>
     </property>
    </widget>
   </widget>

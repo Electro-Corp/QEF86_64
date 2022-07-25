@@ -5,8 +5,21 @@
 #include <QApplication>
 #include <fstream>
 #include<stdlib.h>
+#include <QMessageBox>
+#include "createhd.h"
 int currentIndex = 0;
-
+std::string execcom(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    return result;
+}
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -96,11 +109,12 @@ std::list<vm> MainWindow::parsevms(std::string vmsfile){
 
 
 }
+
 void MainWindow::on_commandLinkButton_clicked()
 {
     std::string final;
     std::list<vm>::iterator i;
-    int countboi;
+    int countboi = 0;
     for(i = this->viewVMS.begin(); countboi < currentIndex; ++i)
     {
         //bruh
@@ -119,7 +133,13 @@ void MainWindow::on_commandLinkButton_clicked()
     final = final + " -m "+(std::to_string(i->memsize))+"G";
     char mainfinal[100000];
     strcpy(mainfinal,final.c_str());
-    std::system(mainfinal);
+    std::string system = execcom(mainfinal);
+    QMessageBox msgBox;
+    char *systemchar = new char[system.length()+1];
+    strcpy(systemchar, system.c_str());
+    msgBox.setText(systemchar);
+
+    msgBox.exec();
 }
 
 //std::string name = i->name;
@@ -135,7 +155,6 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
     std::list<vm>::iterator i;
     for(i = this->viewVMS.begin(); countboi < currentIndex; ++i)
     {
-        //bruh
         countboi ++;
     }
     ui->vm_name->setText((QString::fromStdString(i->name)));
@@ -154,5 +173,24 @@ void MainWindow::on_create_new_vm_clicked()
 void MainWindow::on_pushButton_clicked()
 {
     this->refreshItems();
+}
+
+
+/*
+ *  createHD *hd = new createHD();
+    hd->show();
+ */
+
+void MainWindow::newimg_clicked()
+{
+    createHD *hd = new createHD();
+    hd->show();
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    createHD *hd = new createHD();
+    hd->show();
 }
 
